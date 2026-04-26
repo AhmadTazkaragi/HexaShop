@@ -6,15 +6,18 @@ export const metadata = {
   description: "Browse our products",
 };
 
+export const dynamic = "force-dynamic"; // مهم على Vercel
+
 async function getProducts(): Promise<Product[]> {
   try {
     const res = await fetch("https://fakestoreapi.com/products", {
-      next: { revalidate: 300 },
+      cache: "no-store", // لا تعتمد على build cache
     });
 
     if (!res.ok) return [];
     return await res.json();
-  } catch {
+  } catch (error) {
+    console.error("Products fetch error:", error);
     return [];
   }
 }
