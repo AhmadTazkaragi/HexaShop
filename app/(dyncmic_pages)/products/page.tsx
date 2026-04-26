@@ -7,15 +7,16 @@ export const metadata = {
 };
 
 async function getProducts(): Promise<Product[]> {
-  const res = await fetch("https://fakestoreapi.com/products", {
-    next: { revalidate: 300 },
-  });
+  try {
+    const res = await fetch("https://fakestoreapi.com/products", {
+      next: { revalidate: 300 },
+    });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch products");
+    if (!res.ok) return [];
+    return await res.json();
+  } catch {
+    return [];
   }
-
-  return res.json();
 }
 
 export default async function ProductsPage() {
@@ -25,11 +26,15 @@ export default async function ProductsPage() {
     <main className="py-10">
       <h1 className="text-2xl md:text-3xl font-bold mb-6">Products</h1>
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </section>
+      {products.length === 0 ? (
+        <p className="text-gray-500">No products available right now.</p>
+      ) : (
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </section>
+      )}
     </main>
   );
 }
