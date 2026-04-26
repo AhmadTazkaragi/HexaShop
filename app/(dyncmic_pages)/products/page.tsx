@@ -1,23 +1,25 @@
+import type { Metadata } from "next";
 import ProductCard from "@/components/Products/ProductCard";
 import { Product } from "@/types/product";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Products | Hexashop",
-  description: "Browse our products",
+  description: "Browse all products",
 };
 
-export const dynamic = "force-dynamic"; // مهم على Vercel
+export const dynamic = "force-dynamic"; // يمنع prerender وقت build
+export const revalidate = 0;
 
 async function getProducts(): Promise<Product[]> {
   try {
     const res = await fetch("https://fakestoreapi.com/products", {
-      cache: "no-store", // لا تعتمد على build cache
+      cache: "no-store",
     });
 
     if (!res.ok) return [];
-    return await res.json();
-  } catch (error) {
-    console.error("Products fetch error:", error);
+    const data = (await res.json()) as Product[];
+    return Array.isArray(data) ? data : [];
+  } catch {
     return [];
   }
 }
