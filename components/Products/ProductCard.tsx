@@ -21,7 +21,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <button
           type="button"
           onClick={() => console.log(`Added to cart: ${product.title}`)}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition"
+          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition cursor-pointer text-sm"
         >
           Add to cart
         </button>
