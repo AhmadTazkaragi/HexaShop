@@ -1,13 +1,7 @@
-import type { Metadata } from "next";
 import ProductCard from "@/components/Products/ProductCard";
 import { Product } from "@/types/product";
 
-export const metadata: Metadata = {
-  title: "Products | Hexashop",
-  description: "Browse all products",
-};
-
-export const dynamic = "force-dynamic"; // يمنع prerender وقت build
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 async function getProducts(): Promise<Product[]> {
@@ -17,7 +11,7 @@ async function getProducts(): Promise<Product[]> {
     });
 
     if (!res.ok) return [];
-    const data = (await res.json()) as Product[];
+    const data = await res.json();
     return Array.isArray(data) ? data : [];
   } catch {
     return [];
