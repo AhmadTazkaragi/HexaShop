@@ -4,8 +4,8 @@ import "./globals.css";
 
 import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/Footer/Footer";
-import Container from "@/components/Container/Container";
 import { ThemeProvider } from "@/context/ThemeProvider";
+import Container from "@/components/Container/Container";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -26,17 +26,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="" suppressHydrationWarning>
-    <body
-  className={`${montserrat.className} min-h-screen flex flex-col bg-white text-black dark:bg-[#111] dark:text-white transition-colors duration-300`}
->
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${montserrat.className} min-h-screen flex flex-col bg-white text-black dark:bg-[#111] dark:text-white transition-colors duration-300`}
+      >
         <ThemeProvider>
           <NavBar />
-
           <main className="flex-1">
             <Container>{children}</Container>
           </main>
-
           <Footer />
         </ThemeProvider>
       </body>
