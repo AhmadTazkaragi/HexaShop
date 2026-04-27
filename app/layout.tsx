@@ -15,6 +15,9 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Hexashop",
   description: "Your one-stop e-commerce destination",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({
